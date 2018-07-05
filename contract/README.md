@@ -1,4 +1,4 @@
-Smart contract with test into Truffle project.
+# Smart contract with test into Truffle project.
 
 To check test's install global modules first:
 1. Truffle
