@@ -1,6 +1,7 @@
 # Java project
 
 Property file:
+pass: /src/main/resources/application.properties
 
 Smart Contract 
                     
