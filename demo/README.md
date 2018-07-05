@@ -6,12 +6,12 @@ Smart Contract
                     
                         config:
                     
-    smart.localhost = ETH node (example: myetherapi.com, etherscan.io, infura.io, giveth.io)
+    smart.localhost = ETH node (example: https://ropsten.infura.io/<INFURA_Access_Token>)
     smart.private.key = owner private key
     smart.from = owner address
     smart.to = contract address
     smart.gas.price = gas price for transaction in WEI
-    smart.gas.limit = gas limit for transaction in WEI
+    smart.gas.limit = gas limit for transaction
     
 Swagger 
 
