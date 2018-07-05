@@ -1,3 +1,5 @@
+# Java project
+
 Property file:
 
 Smart Contract 
