@@ -1,3 +1,3 @@
 # ApiProject
-Folder demo - java project
+Folder API-Contract - java project
 Forlder jontract - contract project
