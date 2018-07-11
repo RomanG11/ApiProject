@@ -74,7 +74,7 @@ public class ContractController {
 
     }
 
-    @GetMapping("/api/read-sha/{sha}")
+    @GetMapping("/api/read-sha/ {sha}")
     @ApiOperation(value = "Find by sha", tags = "Contract", notes = "Method for find transaction by sha from Smart Contract")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Success"),
@@ -123,6 +123,16 @@ public class ContractController {
         } catch (Exception ex) {
             LOGGER.error(format("Error findByTxId method: - %s", ex.getMessage()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomError(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
+        }
+    }
+
+    @GetMapping("/getGasPrice")
+    public ResponseEntity<?> getGasPrice(){
+        try {
+            return ResponseEntity.ok(integrationSevice.getGasPrice());
+        } catch (Exception e){
+            LOGGER.error(format("Error getGasPrice method: - %s", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomError(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
         }
     }
 }

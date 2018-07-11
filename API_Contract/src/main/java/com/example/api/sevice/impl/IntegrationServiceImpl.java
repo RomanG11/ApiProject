@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 @Component
 public class IntegrationServiceImpl implements IntegrationSevice {
@@ -23,7 +24,7 @@ public class IntegrationServiceImpl implements IntegrationSevice {
     private static String FROM;
     private static String PRIVATE_KEY;
     private static String TO;
-    private static String GAS_PRICE;
+//    private static String GAS_PRICE;
     private static String GAS_LIMIT;
 
     private static Web3j web3j;
@@ -40,19 +41,23 @@ public class IntegrationServiceImpl implements IntegrationSevice {
             FROM = prop.getProperty("smart.from");
             PRIVATE_KEY = prop.getProperty("smart.private.key");
             TO = prop.getProperty("smart.to");
-            GAS_PRICE = prop.getProperty("smart.gas.price");
+//            GAS_PRICE = prop.getProperty("smart.gas.price");
             GAS_LIMIT = prop.getProperty("smart.gas.limit");
             web3j = Web3j.build(new HttpService(LOCALHOST));
             storage = new Storage(TO,
                     web3j,
                     Credentials.create(PRIVATE_KEY),
-                    new BigInteger(GAS_PRICE),
+                    web3j.ethGasPrice().sendAsync().get().getGasPrice(),
                     new BigInteger(GAS_LIMIT));
 
             is.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
@@ -70,6 +75,11 @@ public class IntegrationServiceImpl implements IntegrationSevice {
     @Override
     public Tuple4<String, String, String, String> findById(BigInteger txId) throws Exception {
         return storage.findById(txId).sendAsync().get();
+    }
+
+    @Override
+    public BigInteger getGasPrice() throws ExecutionException, InterruptedException {
+        return web3j.ethGasPrice().sendAsync().get().getGasPrice();
     }
 
 }
